@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNPホッピング規制まとめ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+  :root {
+    --bg: #f5f6fa;
+    --white: #ffffff;
+    --border: #e8e8f0;
+    --accent: #ff3333;
+    --accent2: #ff8800;
+    --blue: #1d9bf0;
+    --green: #00c851;
+    --text: #1a1a2e;
+    --muted: #888899;
+    --light: #f0f0f8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 1rem 5rem;
+  }
+
+  .wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--accent);
+    border-radius: 18px;
+    padding: 2rem 1.8rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.4s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .hero-title {
+    font-size: clamp(1.3rem, 4vw, 1.7rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .hero-body {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.8;
+  }
+
+  /* ── Block ── */
+  .block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 1.6rem 1rem;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.4s ease both;
+  }
+  .block:nth-child(2) { animation-delay: 0.05s; }
+  .block:nth-child(3) { animation-delay: 0.10s; }
+  .block:nth-child(4) { animation-delay: 0.15s; }
+  .block:nth-child(5) { animation-delay: 0.20s; }
+  .block:nth-child(6) { animation-delay: 0.25s; }
+  .block:nth-child(7) { animation-delay: 0.30s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .block-title {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .block-text {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: #333344;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* ── Table ── */
+  .table-wrap {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin: 0.8rem 0;
+    font-size: 0.88rem;
+    line-height: 1.9;
+  }
+
+  /* ── Rank ── */
+  .rank-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.8rem 0;
+  }
+  .rank-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--light);
+    border-radius: 8px;
+    padding: 0.55rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  /* ── Warning pill ── */
+  .pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.18rem 0.65rem;
+    border-radius: 20px;
+    margin: 0 0.15rem;
+  }
+  .pill-red   { background: #ffe5e5; color: var(--accent); }
+  .pill-orange { background: #fff3e0; color: var(--accent2); }
+  .pill-green { background: #e5f9ee; color: var(--green); }
+
+  /* ── Danger block ── */
+  .danger-block {
+    background: #fff5f5;
+    border: 1px solid #ffd0d0;
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin: 0.8rem 0;
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: #333;
+  }
+
+  /* ── Check list ── */
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.8rem 0;
+  }
+  .check-item {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #333344;
+  }
+  .check-icon { flex-shrink: 0; margin-top: 0.05rem; }
+
+  /* ── Footer block ── */
+  .footer-block {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%);
+    border-radius: 16px;
+    padding: 1.8rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.4s ease 0.35s both;
+  }
+  .footer-block p {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.92rem;
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+  }
+  .footer-block strong { color: #fff; font-weight: 900; }
+
+  /* ── Copy btn ── */
+  .copy-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.9rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  .copy-btn {
+    background: var(--light);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.3rem 1rem;
+    border-radius: 6px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.76rem;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .copy-btn:hover  { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied { border-color: var(--green); color: var(--green); background: #e5f9ee; }
+
+  .notice {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.73rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Hero = X親ポスト -->
+  <div class="hero">
+    <div class="hero-eyebrow">🚨 緊急速報</div>
+    <div class="hero-title">知らないと詰む話<br>MNPホッピングが2026年夏以降"終わる"</div>
+    <div class="hero-body">総務省が規制に動いており、SIM還元の上限引き下げ・違約金引き上げ・特典分割化が全部同時に来る可能性がある。稼げる環境は残りわずか。詳しく知りたい方はプロフの公式LINEから👇</div>
+    <div class="copy-wrap" style="border-top:1px solid rgba(255,255,255,0.2); margin-top:1.2rem; padding-top:0.8rem;">
+      <button class="copy-btn" style="background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3); color:#fff;"
+        onclick="copyText(this, `🚨知らないと詰む話🚨\n\nY!mobile・SoftBankの\nMNPホッピングが\n2026年夏以降"終わる"\n\n総務省が規制に動いており\nSIM還元の上限引き下げ・違約金引き上げ・特典分割化\n全部同時に来る可能性がある\n\n稼げる環境は残りわずか\n\n詳しく知りたい方は\nプロフの公式LINEから👇`)">コピー</button>
+    </div>
+  </div>
+
+  <!-- Block 1 -->
+  <div class="block">
+    <div class="block-title">⚠️ まず現状から</div>
+    <div class="block-text">総務省が2026年夏をめどにホッピング規制の方針を決定予定です。各キャリアの要望はこれ👇</div>
+    <div class="table-wrap">
+🔴 ドコモ　→　<strong>30ヶ月縛り</strong>
+🔴 SoftBank　→　<strong>2年縛り</strong>
+🔴 KDDI　→　<strong>1年以上</strong>
+🟡 楽天　→　<strong>1年以内</strong>
+    </div>
+    <div class="block-text">つまり全社「もっと縛りたい」と総務省に直訴してる状態です。</div>
+    <div class="copy-wrap">
+      <button class="copy-btn" onclick="copyText(this, `⚠️まず現状から\n\n総務省が2026年夏をめどにホッピング規制の方針を決定予定です。各キャリアの要望はこれ👇\n\n🔴ドコモ → 30ヶ月縛り\n🔴SoftBank → 2年縛り\n🔴KDDI → 1年以上\n🟡楽天 → 1年以内\n\nつまり全社「もっと縛りたい」と総務省に直訴してる状態です。`)">コピー</button>
+    </div>
+  </div>
+
+  <!-- Block 2 -->
+  <div class="block">
+    <div class="block-title">💀 今でも実は"見えない縛り"がある</div>
+    <div class="block-text">SoftBankグループには公式ルールとは別に<strong>社内ブラックリスト</strong>が存在します。</div>
+    <div class="danger-block">
+<span class="pill pill-red">⛔ 90日以内</span> 高確率でブラック入り<br>
+<span class="pill pill-orange">⚠️ 180日以内</span> リスクあり<br>
+<span class="pill pill-green">✅ 180日超え</span> 比較的安全
+    </div>
+    <div class="block-text">一度入ったら喪明けまで最長2年以上、グループ全社（SB・Y!mobile・LINEMO）で弾かれ続けます。</div>
+    <div class="copy-wrap">
+      <button class="copy-btn" onclick="copyText(this, `💀今でも実は"見えない縛り"がある\n\nSoftBankグループには公式ルールとは別に社内ブラックリストが存在します。\n\n⛔ 90日以内 → 高確率でブラック入り\n⚠️ 180日以内 → リスクあり\n✅ 180日超え → 比較的安全\n\n一度入ったら喪明けまで最長2年以上、グループ全社（SB・Y!mobile・LINEMO）で弾かれ続けます。`)">コピー</button>
+    </div>
+  </div>
+
+  <!-- Block 3 -->
+  <div class="block">
+    <div class="block-title">🔥 規制強化されたら何が変わる？</div>
+    <ul class="check-list">
+      <li class="check-item"><span class="check-icon">✅</span><span><strong>SIM単体の還元上限が引き下げ</strong><br>現在最大2万円 → 大幅減の可能性</span></li>
+      <li class="check-item"><span class="check-icon">✅</span><span><strong>短期解約の違約金が引き上げ</strong><br>現行1,100円 → 跳ね上がる</span></li>
+      <li class="check-item"><span class="check-icon">✅</span><span><strong>特典が分割給付に変更</strong><br>すぐ解約しても満額もらえなくなる</span></li>
+    </ul>
+    <div class="block-text">「乗り換えるだけで得」の時代が終わります。</div>
+    <div class="copy-wrap">
+      <button class="copy-btn" onclick="copyText(this, `🔥規制強化されたら何が変わる？\n\n✅SIM単体の還元上限が引き下げ\n（現在最大2万円→大幅減の可能性）\n\n✅短期解約の違約金が引き上げ\n（現行1,100円→跳ね上がる）\n\n✅特典が分割給付に変更\n（すぐ解約しても満額もらえなくなる）\n\n「乗り換えるだけで得」の時代が終わります。`)">コピー</button>
+    </div>
+  </div>
+
+  <!-- Block 4 -->
+  <div class="block">
+    <div class="block-title">📡 ドコモ・auも同じ流れです</div>
+    <div class="block-text" style="margin-bottom:0.8rem;">喪明けの厳しさランキングはこれ👇</div>
+    <ul class="rank-list">
+      <li class="rank-item">🥇 <span>SoftBank　<span class="pill pill-red">最も厳しい</span></span></li>
+      <li class="rank-item">🥈 <span>au</span></li>
+      <li class="rank-item">🥉 <span>docomo　<span class="pill pill-green">比較的ゆるめ</span></span></li>
+    </ul>
+    <div class="block-text">ドコモも90日以内は高リスク・180日以内はグレーゾーンです。"ゆるめ"なだけで油断したら普通に弾かれます。</div>
+    <div class="copy-wrap">
+      <button class="copy-btn" onclick="copyText(this, `📡ドコモ・auも同じ流れです\n\n喪明けの厳しさランキングはこれ👇\n\n🥇SoftBank（最も厳しい）\n🥈au\n🥉docomo（比較的ゆるめ）\n\nドコモも90日以内は高リスク・180日以内はグレーゾーンです。"ゆるめ"なだけで油断したら普通に弾かれます。`)">コピー</button>
+    </div>
+  </div>
+
+  <!-- Block 5 -->
+  <div class="block">
+    <div class="block-title">💥 KDDIの動きも地味にヤバい</div>
+    <div class="block-text">auはUQmobileと情報共有しており、<strong>au短期解約 → UQmobileも弾かれる</strong>構造はSBグループと同じです。さらにKDDIは端末の残価率一律化にも慎重なため、転売益も締まっていく方向です。</div>
+    <div class="copy-wrap">
+      <button class="copy-btn" onclick="copyText(this, `💥KDDIの動きも地味にヤバい\n\nauはUQmobileと情報共有しており、au短期解約→UQmobileも弾かれる構造はSBグループと同じです。さらにKDDIは端末の残価率一律化にも慎重なため、転売益も締まっていく方向です。`)">コピー</button>
+    </div>
+  </div>
+
+  <!-- Block 6 -->
+  <div class="block">
+    <div class="block-title">📅 タイムリミットは2026年夏</div>
+    <div class="block-text">今の環境でホッピングできるのはあと数ヶ月が限界です。動くなら今すぐ。待つやつは後悔します。</div>
+    <div class="copy-wrap">
+      <button class="copy-btn" onclick="copyText(this, `📅タイムリミットは2026年夏\n\n今の環境でホッピングできるのはあと数ヶ月が限界です。動くなら今すぐ。待つやつは後悔します。`)">コピー</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-block">
+    <p>ホッピングで稼ぐ全ての旨みが<br>2026年夏以降に一斉に消えていく可能性がある</p>
+    <p><strong>時間切れ前に動いてください🔥</strong></p>
+  </div>
+
+  <p class="notice">※ 情報は2026年5月時点。規制内容は今後変更の可能性があります。</p>
+
+</div>
+
+<script>
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ コピー済み';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'コピー';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
